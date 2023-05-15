@@ -19,7 +19,7 @@ print(output)
 
 
 
-This model is a fine-tuned version of [Helsinki-NLP/opus-mt-bn-en](https://huggingface.co/Helsinki-NLP/opus-mt-bn-en) on the kde4 dataset.
+This model is a fine-tuned version of [Helsinki-NLP/opus-mt-bn-en](https://huggingface.co/Helsinki-NLP/opus-mt-bn-en).
 It achieves the following results on the evaluation set:
 - Loss: 1.6885
 - Bleu: 50.9475
