@@ -16,7 +16,7 @@ class BengaliTranslation:
         self.source_lang = "bn"
         self.target_lang = "en"
         self.batch_size = 16
-        self.num_epochs = 10
+        self.num_epochs = 20
         self.push_to_hub = push_to_hub
         self.metric = load_metric("sacrebleu")
 
@@ -83,7 +83,6 @@ class BengaliTranslation:
         print(0)
         from transformers.keras_callbacks import PushToHubCallback
 
-
         args = Seq2SeqTrainingArguments(
             f"bengali-{self.source_lang}-to-{self.target_lang}",
             evaluation_strategy="epoch",
@@ -94,7 +93,7 @@ class BengaliTranslation:
             save_total_limit=3,
             num_train_epochs=self.num_epochs,
             predict_with_generate=True,
-            fp16=False,
+            fp16=True,
             push_to_hub=self.push_to_hub,
         )
         data_collator = DataCollatorForSeq2Seq(self.tokenizer, model=self.pretrain_model)
@@ -110,7 +109,7 @@ class BengaliTranslation:
         )
 
         trainer.train()
-        trainer.save_model('bengali-bn-to-en')
+        trainer.save_model('bn-to-en')
 
         # trainer.push_to_hub()
 
@@ -119,7 +118,6 @@ if __name__ == '__main__':
     model_checkpoint = "Helsinki-NLP/opus-mt-bn-en"
     # data_path = 'DATA/new_dataset.txt'
     data_path = 'DATA/combined_data.txt'
-    push_to_hub = False
+    push_to_hub = True
     bengali_translator = BengaliTranslation(model_checkpoint, data_path, push_to_hub)
     bengali_translator.finetune()
-
